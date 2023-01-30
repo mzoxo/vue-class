@@ -17,7 +17,7 @@ const app = {
           // 儲存 token 至 cookie
           const { token, expired } = res.data;
           document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
-          window.location = 'products.html';
+          window.location = './products.html';
         })
         .catch((err) => {
           alert(err.data.message);

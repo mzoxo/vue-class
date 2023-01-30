@@ -88,7 +88,7 @@
                   </div>
                 </div>
               </div>
-              <template v-if="tempProduct.imagesUrl.length > 0">
+              <template v-if="tempProduct?.imagesUrl?.length">
                 <img
                   v-for="image in tempProduct.imagesUrl"
                   :key="image"

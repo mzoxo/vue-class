@@ -23,7 +23,7 @@ const app = {
         })
         .catch((err) => {
           alert(err.data.message);
-          window.location = 'login.html';
+          window.location = './login.html';
         });
     },
     getProductList() {
