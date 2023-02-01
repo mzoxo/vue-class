@@ -45,16 +45,11 @@
                 <td class="text-end">{{ product.origin_price }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td>
-                  <span class="text-success" v-if="!!product.is_enabled">啟用</span>
-                  <span v-else>未啟用</span>
+                  <span class="text-success">{{!!product.is_enabled?'啟用':'未啟用'}}</span>
                 </td>
                 <td>
                   <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary btn-sm"
-                      @click="openModel('edit',product)"
-                    >
+                    <button type="button" class="btn btn-outline-primary btn-sm" @click="openModel('edit',product)">
                       編輯
                     </button>
                     <button type="button" class="btn btn-outline-danger btn-sm" @click="openModel('delete',product)">
@@ -80,7 +75,7 @@
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
               <h5 id="productModalLabel" class="modal-title">
-                <span>新增產品</span>
+                <span>{{ productStatus === 'new' ? '新增' : '編輯' }}產品</span>
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -268,13 +263,7 @@
               <strong class="text-danger">{{ productData.title }}</strong> 商品(刪除後將無法恢復)。
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                data-bs-dismiss="modal"
-              >
-                取消
-              </button>
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
               <button type="button" class="btn btn-danger" @click="delProduct">確認刪除</button>
             </div>
           </div>
