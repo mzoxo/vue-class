@@ -10,13 +10,13 @@ defineRule('required', required);
 defineRule('email', email);
 defineRule('isPhone', (value) => {
   const phoneNumber = /^(09)[0-9]{8}$/;
-  return phoneNumber.test(value) ? true : '請填入正確的手機號碼';
+  return phoneNumber.test(value) ? true : '請填入正確的手機號碼，需為 09 開頭';
 });
 
 loadLocaleFromURL('https://unpkg.com/@vee-validate/i18n@4.1.0/dist/locale/zh_TW.json');
 
 configure({
-  generateMessage: localize('zh_TW')
+  generateMessage: localize('zh_TW'),
 });
 
 const productModal = {
@@ -25,7 +25,7 @@ const productModal = {
     return {
       modal: {},
       tempProduct: {},
-      qty: 1
+      qty: 1,
     };
   },
   props: ['id', 'addToCart', 'openModal', 'loading'],
@@ -49,15 +49,15 @@ const productModal = {
     },
     hide() {
       this.modal.hide();
-    }
+    },
   },
   watch: {
     id() {
       if (this.id) {
         this.getProductItem();
       }
-    }
-  }
+    },
+  },
 };
 
 const app = createApp({
@@ -68,7 +68,7 @@ const app = createApp({
       cart: {
         carts: [],
         final_total: 0,
-        total: 0
+        total: 0,
       },
       loadingItem: '',
       loadingAddToCart: false,
@@ -79,11 +79,11 @@ const app = createApp({
           name: '',
           email: '',
           tel: '',
-          address: ''
+          address: '',
         },
-        message: ''
+        message: '',
       },
-      isLoading: true
+      isLoading: true,
     };
   },
   components: {
@@ -91,7 +91,7 @@ const app = createApp({
     VForm: Form,
     VField: Field,
     ErrorMessage: ErrorMessage,
-    loading: VueLoading.Component
+    loading: VueLoading.Component,
   },
   mounted() {
     this.getProductList();
@@ -116,7 +116,7 @@ const app = createApp({
       this.loadingAddToCart = true;
       const data = {
         product_id,
-        qty
+        qty,
       };
       axios
         .post(`${apiUrl}/${apiPath}/cart`, { data })
@@ -142,7 +142,7 @@ const app = createApp({
     updateCartItem(cart) {
       const data = {
         product_id: cart.product_id,
-        qty: cart.qty
+        qty: cart.qty,
       };
       this.loadingItem = cart.id;
       axios
@@ -190,13 +190,15 @@ const app = createApp({
         .post(`${apiUrl}/${apiPath}/order`, { data })
         .then((res) => {
           alert('訂單送出成功！');
+          this.$refs.form.resetForm();
+          this.form.message = '';
           this.getCartList();
           this.loadingSubmit = false;
         })
         .catch((err) => {
           console.log(err.data.message);
         });
-    }
-  }
+    },
+  },
 });
 app.mount('#app');
